@@ -42,7 +42,7 @@ export const getCurrentMovies = () => {
    });
   };
 
-  export const getOtherMovies = (id) => {
+  export const getSimilar = (id) => {
     return fetch(
       `https://api.themoviedb.org/3/movie/${id}/similar?api_key=${process.env.REACT_APP_TMDB_KEY}&language=en-US&page=1`
     ).then((response) => {
@@ -54,4 +54,32 @@ export const getCurrentMovies = () => {
     .catch((error) => {
       throw error
    });
+  };
+
+  export const getWatchProvider = (id) => {
+    return fetch(
+      `https://api.themoviedb.org/3/movie/${id}/watch/providers?api_key=${process.env.REACT_APP_TMDB_KEY}`
+    ).then((response) => {
+      if (!response.ok) {
+        throw new Error(response.json().message);
+      }
+      return response.json();
+    })
+    .catch((error) => {
+      throw error
+   });
+  };
+
+  export const getPopularTv = () => {
+    return fetch(
+      `https://api.themoviedb.org/3/tv/popular?api_key=${process.env.REACT_APP_TMDB_KEY}&language=en-US&page=1`
+    ).then((response) => {
+      if (!response.ok) {
+        throw new Error(response.json().message);
+      }
+      return response.json();
+    })
+    .catch((error) => {
+       throw error
+    });
   };

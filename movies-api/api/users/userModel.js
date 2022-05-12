@@ -1,11 +1,12 @@
 import mongoose from 'mongoose';
-import bcrypt from 'bcrypt-nodejs'
+import bcrypt from 'bcrypt-nodejs';
+// import isEmail from 'validator';
 
 const Schema = mongoose.Schema;
 
 const UserSchema = new Schema({
-  username: { type: String, unique: true, required: true},
-  password: {type: String, required: true },
+  username: { type: String, unique: true, required: [true, 'Please enter a username']},
+  password: {type: String, required: [true, 'Please enter a password'] },
   favourites: [{type: mongoose.Schema.Types.ObjectId, ref: 'Movies'}]
 });
 

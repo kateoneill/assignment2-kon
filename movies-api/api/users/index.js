@@ -11,13 +11,22 @@ router.get('/', async (req, res) => {
     const users = await User.find();
     res.status(200).json(users);
 });
-
+// Register 
 router.post('/',asyncHandler( async (req, res, next) => {
+
   if (!req.body.username || !req.body.password) {
-    res.status(401).json({success: false, msg: 'Please pass username and password.'});
+
+    res.status(401).json({success: false, msg: 'Please pass in username and password'});
     return next();
   }
   if (req.query.action === 'register') {
+    let passwordRegEx = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{5,}$/;
+    const validPassword = passwordRegEx.test(req.body.password);
+    if(!validPassword){
+      res.status(401).json({success: false, msg: 'Please provide a valid password (5 characters with one letter and one number).'}); 
+      return next(); 
+    }
+    //create user
     await User.create(req.body);
     res.status(201).json({code: 201, msg: 'Successful created new user.'});
   } else {

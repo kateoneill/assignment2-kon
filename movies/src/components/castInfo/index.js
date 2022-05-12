@@ -26,7 +26,7 @@ const CastInfo = ({ movie }) => {
     return <h1>{error.message}</h1>;
   }
 
-  const cast = data.cast
+  const cast = data.cast;
 
   return (
 

@@ -3,7 +3,7 @@ import { movies, movieReviews, movieDetails } from './moviesData';
 import uniqid from 'uniqid';
 import movieModel from './movieModel';
 import asyncHandler from 'express-async-handler';
-import { getUpcomingMovies, getCredits, getCurrentMovies, getOtherMovies } from '../tmdb-api';
+import { getUpcomingMovies, getCredits, getCurrentMovies, getSimilar, getWatchProvider, getPopularTv } from '../tmdb-api';
 
 const router = express.Router(); 
 router.get('/', asyncHandler(async (req, res) => {
@@ -58,12 +58,27 @@ router.get('/tmdb/upcoming', asyncHandler( async(req, res) => {
 
 router.get('/:id/similar', asyncHandler(async (req, res) => {
     const id = parseInt(req.params.id);
-    const movie = await getOtherMovies(id);
+    const movie = await getSimilar(id);
     if (movie) {
         res.status(200).json(movie);
     } else {
         res.status(404).json({message: 'The resource you requested could not be found.', status_code: 404});
     }
 }));
+
+router.get('/:id/watchprovider', asyncHandler(async (req, res) => {
+    const id = parseInt(req.params.id);
+    const movie = await getWatchProvider(id);
+    if (movie) {
+        res.status(200).json(movie);
+    } else {
+        res.status(404).json({message: 'The resource you requested could not be found.', status_code: 404});
+    }
+}));
+
+router.get('/tmdb/populartv', asyncHandler( async(req, res) => {
+    const popularTv = await getPopularTv();
+    res.status(200).json(popularTv);
+  }));
 
 export default router;

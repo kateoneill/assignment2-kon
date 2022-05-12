@@ -1,7 +1,8 @@
 import React, { useContext, useState } from "react";
 import { Navigate } from "react-router-dom";
 import { AuthContext } from '../authContext';
-import { Paper, Card, Grid, Input, TextField, Button } from "@mui/material";
+import { Paper, Card, Grid, Input, TextField, Button, Alert } from "@mui/material";
+
 
 
 const SignUpPage = props => {
@@ -18,6 +19,10 @@ const SignUpPage = props => {
     if (validPassword && password === passwordAgain) {
       context.register(userName, password);
       setRegistered(true);
+    }
+
+    if(!validPassword) {
+      alert('Please provide a valid password (5 characters with one letter and one number).')
     }
   }
 
